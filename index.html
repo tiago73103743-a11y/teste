@@ -1,292 +1,158 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <link rel="https://github.com/tiago73103743-a11y/teste/blob/fd6e8ff2c35b7fbef1284f0740674f66ba13c082/manifest.json" href="manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardápio Futurista</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* FUNDO FUTURISTA */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { min-height: 100vh; overflow-x: hidden; }
         .fundo-futurista {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%);
             z-index: -2;
         }
-
         .fundo-futurista::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
+            content: ''; position: absolute; width: 100%; height: 100%;
             background-image: 
-                radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.12) 0%, transparent 40%);
+                radial-gradient(circle at 20% 30%, rgba(0,255,255,0.12) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(168,85,247,0.12) 0%, transparent 40%);
             animation: brilho 8s infinite alternate;
         }
-
-        @keyframes brilho {
-            from { opacity: 0.6; }
-            to { opacity: 1; }
-        }
-
-        .conteudo {
-            position: relative;
-            z-index: 1;
-            padding: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
+        @keyframes brilho { from { opacity: 0.6; } to { opacity: 1; } }
+        .conteudo { position: relative; z-index: 1; padding: 30px; max-width: 1400px; margin: 0 auto; }
         .titulo {
-            text-align: center;
-            color: #00ffff;
-            font-size: 2.5rem;
-            margin-bottom: 40px;
+            text-align: center; color: #00ffff; font-size: 2.5rem; margin-bottom: 40px;
             text-shadow: 0 0 15px #00ffff, 0 0 30px rgba(0,255,255,0.4);
         }
-
-        /* GRADE DOS PRATOS */
-        .grade-cardapio {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-
+        .grade-cardapio { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-bottom: 50px; }
         .cartao {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 16px;
-            padding: 20px;
-            transition: all 0.3s ease;
+            background: rgba(15,23,42,0.7); border: 1px solid rgba(0,255,255,0.3);
+            border-radius: 16px; padding: 20px; transition: all 0.3s ease;
             backdrop-filter: blur(10px);
         }
-
-        .cartao:hover {
-            border-color: #00ffff;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-            transform: translateY(-5px);
-        }
-
-        /* IMAGEM COM ZOOM */
+        .cartao:hover { border-color: #00ffff; box-shadow: 0 0 20px rgba(0,255,255,0.3); transform: translateY(-5px); }
         .container-imagem {
-            overflow: hidden;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            cursor: zoom-in;
-            height: 220px;
-        }
-
-        .imagem-prato {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .imagem-prato.zoom {
-            transform: scale(1.6);
-            cursor: zoom-out;
-        }
-
-        .nome-prato {
-            color: #fff;
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-        }
-
-        /* BOTÃO ABAIXO DA IMAGEM ✅ */
-        .botao-acao {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(90deg, #00ffff, #a855f7);
-            border: none;
-            border-radius: 8px;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s;
-            font-size: 1rem;
-        }
-
-        .botao-acao:hover {
-            transform: scale(1.03);
-        }
-
-        /* PAINEL ADMINISTRATIVO */
-        .painel-admin {
-            background: rgba(30, 27, 75, 0.6);
-            border: 1px solid rgba(168, 85, 247, 0.4);
-            border-radius: 16px;
-            padding: 25px;
-            margin-top: 40px;
-        }
-
-        .painel-admin h2 {
-            color: #a855f7;
-            margin-bottom: 20px;
-        }
-
-        .form-admin {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .form-admin input {
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(0,255,255,0.3);
+            overflow: hidden; border-radius: 12px; margin-bottom: 15px;
+            cursor: zoom-in; height: 220px;
             background: rgba(0,0,0,0.3);
-            color: white;
-            outline: none;
         }
-
-        .form-admin input:focus {
-            border-color: #00ffff;
+        .imagem-prato { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .imagem-prato.zoom { transform: scale(1.6); cursor: zoom-out; }
+        .nome-prato { color: #fff; font-size: 1.3rem; margin-bottom: 12px; }
+        .botao-acao {
+            width: 100%; padding: 12px;
+            background: linear-gradient(90deg, #00ffff, #a855f7);
+            border: none; border-radius: 8px; color: #000; font-weight: bold;
+            cursor: pointer; transition: transform 0.2s; font-size: 1rem;
         }
-
-        .form-admin button {
-            padding: 12px;
-            background: #00ffff;
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .item-admin {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            background: rgba(0,0,0,0.25);
-            border-radius: 8px;
-            margin-bottom: 8px;
-            color: white;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .btn-editar {
-            background: #facc15;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-right: 6px;
-        }
-
-        .btn-excluir {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .aviso-senha {
-            color: #888;
-            font-size: 0.85rem;
-            margin-top: 10px;
-        }
-        
-        .admin-secreto {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            opacity: 0;
-            z-index: 999;
-        }
-        
-        .modo-admin .painel-admin {
-            display: block;
-        }
-        
+        .botao-acao:hover { transform: scale(1.03); }
         .painel-admin {
-            display: none;
+            background: rgba(30,27,75,0.6); border: 1px solid rgba(168,85,247,0.4);
+            border-radius: 16px; padding: 25px; margin-top: 40px; display: none;
         }
+        .modo-admin .painel-admin { display: block; }
+        .painel-admin h2 { color: #a855f7; margin-bottom: 20px; }
+        .form-admin { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
+        .form-admin input, .form-admin button {
+            padding: 12px; border-radius: 8px; border: 1px solid rgba(0,255,255,0.3);
+            background: rgba(0,0,0,0.3); color: white; outline: none;
+        }
+        .form-admin input:focus { border-color: #00ffff; }
+        .form-admin button {
+            background: #00ffff; color: #000;
+            border: none; font-weight: bold; cursor: pointer; font-size: 1rem;
+        }
+        .upload-foto {
+            display: flex; align-items: center; gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn-escolher-foto {
+            padding: 10px 15px; background: #a855f7; color: white;
+            border: none; border-radius: 8px; cursor: pointer; font-weight: bold;
+        }
+        .nome-arquivo { color: #ccc; font-size: 0.9rem; }
+        .item-admin {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px; background: rgba(0,0,0,0.25); border-radius: 8px;
+            margin-bottom: 8px; color: white; flex-wrap: wrap; gap: 8px;
+        }
+        .btn-editar { background: #facc15; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-right: 6px; }
+        .btn-excluir { background: #ef4444; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .aviso-senha { color: #888; font-size: 0.85rem; margin-top: 10px; }
+        .admin-secreto { position: fixed; top: 0; right: 0; width: 50px; height: 50px; cursor: pointer; opacity: 0; z-index: 999; }
+        .preview-editar { max-width: 100px; border-radius: 6px; margin-left: 10px; }
     </style>
 </head>
 <body>
     <div class="fundo-futurista"></div>
     <div class="conteudo">
         <h1 class="titulo">✨ CARDÁPIO FUTURISTA ✨</h1>
-
-        <!-- Área invisível para ativar admin -->
         <div class="admin-secreto" onclick="pedirSenha()"></div>
-
-        <!-- CARDÁPIO -->
-        <div class="grade-cardapio" id="grade-cardapio">
-            <!-- Os itens aparecem aqui automaticamente -->
-        </div>
-
-        <!-- PAINEL ADMINISTRATIVO -->
+        
+        <div class="grade-cardapio" id="grade-cardapio"></div>
+        
         <div class="painel-admin">
             <h2>⚙️ Painel de Administração</h2>
-            
             <div class="form-admin">
                 <input type="text" id="input-nome" placeholder="Nome do prato">
-                <input type="text" id="input-imagem" placeholder="Link da imagem (da internet)">
-                <input type="text" id="input-musica" placeholder="Link da música MP3 (opcional)">
+                
+                <div class="upload-foto">
+                    <input type="file" id="input-arquivo-imagem" accept="image/*" class="d-none" onchange="arquivoSelecionado(this)">
+                    <button type="button" class="btn-escolher-foto" onclick="document.getElementById('input-arquivo-imagem').click()">
+                        📷 Escolher Foto
+                    </button>
+                    <span class="nome-arquivo" id="nome-arquivo-texto">Nenhum arquivo escolhido</span>
+                </div>
+                
+                <input type="text" id="input-imagem" placeholder="Ou cole o link da imagem aqui">
+                <input type="text" id="input-musica" placeholder="Link MP3 da música (opcional)">
+                
                 <button id="btn-adicionar">➕ Adicionar Novo Prato</button>
             </div>
-
+            
             <h3 style="color:#ccc; margin:15px 0 10px;">Editar / Remover:</h3>
-            <div id="lista-admin">
-                <!-- Itens de edição aparecem aqui -->
-            </div>
+            <div id="lista-admin"></div>
             
             <p class="aviso-senha">Para sair do modo admin, recarregue a página</p>
         </div>
     </div>
 
-    <!-- Áudio para música -->
     <audio id="player-musica" preload="auto">
 
     <script>
         const SENHA = "admin123";
         let modoAdmin = false;
         let cardapio = [];
+        let imagemBase64 = ""; // Armazena a imagem selecionada do computador
 
-        // Carregar dados salvos
+        function arquivoSelecionado(input) {
+            if (!input.files || !input.files[0]) {
+                imagemBase64 = "";
+                document.getElementById('nome-arquivo-texto').textContent = 'Nenhum arquivo escolhido';
+                return;
+            }
+            const arquivo = input.files[0];
+            document.getElementById('nome-arquivo-texto').textContent = arquivo.name;
+            
+            const leitor = new FileReader();
+            leitor.onload = e => {
+                imagemBase64 = e.target.result;
+            };
+            leitor.readAsDataURL(arquivo);
+        }
+
         function carregarCardapio() {
             const salvo = localStorage.getItem('cardapio');
             if (salvo) {
                 cardapio = JSON.parse(salvo);
             } else {
-                // Exemplo inicial
                 cardapio = [
                     {
                         id: 1,
                         nome: "Prato de Exemplo",
-                        imagem: "https://via.placeholder.com/400x250/0f172a/00ffff?text=Meu+Prato",
-                        musica: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+                        imagem: "https://picsum.photos/id/292/400/250",
+                        musica: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
                     }
                 ];
                 salvarCardapio();
@@ -298,7 +164,6 @@
             localStorage.setItem('cardapio', JSON.stringify(cardapio));
         }
 
-        // Renderizar todos os pratos
         function renderizarCardapio() {
             const grade = document.getElementById('grade-cardapio');
             const listaAdmin = document.getElementById('lista-admin');
@@ -306,25 +171,26 @@
             listaAdmin.innerHTML = '';
 
             cardapio.forEach(item => {
-                // Cartão do cliente
                 const cartao = document.createElement('div');
                 cartao.className = 'cartao';
                 cartao.setAttribute('data-musica', item.musica || '');
                 cartao.innerHTML = `
-                    <div class="container-imagem">
-                        <img src="${item.imagem}" alt="${item.nome}" class="imagem-prato" onclick="this.classList.toggle('zoom')">
+                    <div class="container-imagem" onclick="this.querySelector('.imagem-prato').classList.toggle('zoom')">
+                        <img src="${item.imagem}" alt="${item.nome}" class="imagem-prato" loading="lazy" onerror="this.src='https://picsum.photos/id/292/400/250'">
                     </div>
                     <h3 class="nome-prato">${item.nome}</h3>
                     <button class="botao-acao">Ver Detalhes</button>
                 `;
                 grade.appendChild(cartao);
 
-                // Item de administração
                 if (modoAdmin) {
                     const adminItem = document.createElement('div');
                     adminItem.className = 'item-admin';
                     adminItem.innerHTML = `
-                        <strong>${item.nome}</strong>
+                        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                            <img src="${item.imagem}" alt="${item.nome}" class="preview-editar" onerror="this.style.display='none'">
+                            <strong>${item.nome}</strong>
+                        </div>
                         <div>
                             <button class="btn-editar" onclick="editarItem(${item.id})">✏️ Editar</button>
                             <button class="btn-excluir" onclick="excluirItem(${item.id})">🗑️ Remover</button>
@@ -334,33 +200,24 @@
                 }
             });
 
-            // Ativar função de música nos cartões
-            ativarMusicaHover();
+            ativarMusicaBotao();
         }
 
-        // 🎵 Música ao passar o mouse
-        function ativarMusicaHover() {
+        function ativarMusicaBotao() {
             const player = document.getElementById('player-musica');
-            document.querySelectorAll('.cartao').forEach(cartao => {
-                const musicaUrl = cartao.getAttribute('data-musica');
-                
-                cartao.addEventListener('mouseenter', () => {
+            document.querySelectorAll('.botao-acao').forEach((botao, indice) => {
+                const musicaUrl = cardapio[indice]?.musica;
+                botao.onclick = () => {
                     if (musicaUrl) {
                         player.src = musicaUrl;
                         player.currentTime = 0;
                         player.volume = 0.5;
-                        player.play().catch(() => {});
+                        player.play().catch(e => console.log('Reprodução bloqueada:', e));
                     }
-                });
-
-                cartao.addEventListener('mouseleave', () => {
-                    player.pause();
-                    player.currentTime = 0;
-                });
+                };
             });
         }
 
-        // 🔐 Pedir senha
         function pedirSenha() {
             if (modoAdmin) return;
             const senha = prompt('Digite a senha de administração:');
@@ -374,70 +231,73 @@
             }
         }
 
-        // ➕ Adicionar novo prato
         document.getElementById('btn-adicionar').addEventListener('click', () => {
-            if (!modoAdmin) return alert('Acesso restrito! Clique no canto superior direito para entrar.');
+            if (!modoAdmin) return alert('Acesso restrito! Clique no canto superior direito.');
             
             const nome = document.getElementById('input-nome').value.trim();
-            const imagem = document.getElementById('input-imagem').value.trim();
+            const linkImagem = document.getElementById('input-imagem').value.trim();
             const musica = document.getElementById('input-musica').value.trim();
-
-            if (!nome || !imagem) {
-                return alert('Preencha o Nome e a Imagem!');
+            
+            // Usa a imagem do arquivo se escolhida, senão usa o link
+            const imagemFinal = imagemBase64 || linkImagem;
+            
+            if (!nome || !imagemFinal) {
+                return alert('Preencha o Nome e escolha uma foto ou cole um link!');
             }
 
-            const novoId = cardapio.length > 0 ? Math.max(...cardapio.map(i => i.id)) + 1 : 1;
-            cardapio.push({
-                id: novoId,
-                nome: nome,
-                imagem: imagem,
-                musica: musica
+            const novoId = cardapio.length ? Math.max(...cardapio.map(i => i.id)) + 1 : 1;
+            cardapio.push({ 
+                id: novoId, 
+                nome, 
+                imagem: imagemFinal, 
+                musica 
             });
-
+            
             salvarCardapio();
             renderizarCardapio();
-
-            // Limpar campos
+            
+            // Limpa os campos
             document.getElementById('input-nome').value = '';
             document.getElementById('input-imagem').value = '';
             document.getElementById('input-musica').value = '';
-
+            document.getElementById('nome-arquivo-texto').textContent = 'Nenhum arquivo escolhido';
+            imagemBase64 = "";
+            
             alert(`✅ "${nome}" adicionado!`);
         });
 
-        // ✏️ Editar
-        function editarItem(id) {
+        window.editarItem = function(id) {
             const item = cardapio.find(i => i.id === id);
             if (!item) return;
-
+            
             const novoNome = prompt('Novo nome:', item.nome);
             if (!novoNome) return;
-
-            const novaImagem = prompt('Nova imagem:', item.imagem);
-            if (!novaImagem) return;
-
+            
+            const novaImagem = prompt('Nova imagem (deixe em branco para manter a atual):', '');
+            if (novaImagem === null) return;
+            
             const novaMusica = prompt('Nova música:', item.musica || '');
             if (novaMusica === null) return;
-
+            
             item.nome = novoNome;
-            item.imagem = novaImagem;
+            if (novaImagem.trim()) {
+                item.imagem = novaImagem.trim();
+            }
             item.musica = novaMusica;
-
+            
             salvarCardapio();
             renderizarCardapio();
             alert('✅ Atualizado!');
-        }
+        };
 
-        // 🗑️ Excluir
-        function excluirItem(id) {
-            if (!confirm('Tem certeza?')) return;
+        window.excluirItem = function(id) {
+            if (!confirm('Tem certeza que deseja remover este prato?')) return;
             cardapio = cardapio.filter(i => i.id !== id);
             salvarCardapio();
             renderizarCardapio();
             alert('✅ Removido!');
-        }
+        };
 
-        // Iniciar
         carregarCardapio();
     </script>
 </body>
