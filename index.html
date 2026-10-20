@@ -9,29 +9,29 @@
         body { min-height: 100vh; overflow-x: hidden; }
         .fundo-futurista {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%);
+            background: linear-gradient(135deg, #020c06 0%, #0f2a1f 50%, #1b4b2e 100%);
             z-index: -2;
         }
         .fundo-futurista::before {
             content: ''; position: absolute; width: 100%; height: 100%;
             background-image: 
-                radial-gradient(circle at 20% 30%, rgba(0,255,255,0.12) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(168,85,247,0.12) 0%, transparent 40%);
+                radial-gradient(circle at 20% 30%, rgba(0,255,136,0.12) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(74,222,128,0.12) 0%, transparent 40%);
             animation: brilho 8s infinite alternate;
         }
         @keyframes brilho { from { opacity: 0.6; } to { opacity: 1; } }
         .conteudo { position: relative; z-index: 1; padding: 30px; max-width: 1400px; margin: 0 auto; }
         .titulo {
-            text-align: center; color: #00ffff; font-size: 2.5rem; margin-bottom: 40px;
-            text-shadow: 0 0 15px #00ffff, 0 0 30px rgba(0,255,255,0.4);
+            text-align: center; color: #00ff88; font-size: 2.5rem; margin-bottom: 40px;
+            text-shadow: 0 0 15px #00ff88, 0 0 30px rgba(0,255,136,0.4);
         }
         .grade-cardapio { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-bottom: 50px; }
         .cartao {
-            background: rgba(15,23,42,0.7); border: 1px solid rgba(0,255,255,0.3);
+            background: rgba(15,42,28,0.7); border: 1px solid rgba(0,255,136,0.3);
             border-radius: 16px; padding: 20px; transition: all 0.3s ease;
             backdrop-filter: blur(10px);
         }
-        .cartao:hover { border-color: #00ffff; box-shadow: 0 0 20px rgba(0,255,255,0.3); transform: translateY(-5px); }
+        .cartao:hover { border-color: #00ff88; box-shadow: 0 0 20px rgba(0,255,136,0.3); transform: translateY(-5px); }
         .container-imagem {
             overflow: hidden; border-radius: 12px; margin-bottom: 15px;
             cursor: zoom-in; height: 220px;
@@ -42,25 +42,25 @@
         .nome-prato { color: #fff; font-size: 1.3rem; margin-bottom: 12px; }
         .botao-acao {
             width: 100%; padding: 12px;
-            background: linear-gradient(90deg, #00ffff, #a855f7);
+            background: linear-gradient(90deg, #00ff88, #22c55e);
             border: none; border-radius: 8px; color: #000; font-weight: bold;
             cursor: pointer; transition: transform 0.2s; font-size: 1rem;
         }
         .botao-acao:hover { transform: scale(1.03); }
         .painel-admin {
-            background: rgba(30,27,75,0.6); border: 1px solid rgba(168,85,247,0.4);
+            background: rgba(30,75,47,0.6); border: 1px solid rgba(74,222,128,0.4);
             border-radius: 16px; padding: 25px; margin-top: 40px; display: none;
         }
         .modo-admin .painel-admin { display: block; }
-        .painel-admin h2 { color: #a855f7; margin-bottom: 20px; }
+        .painel-admin h2 { color: #4ade80; margin-bottom: 20px; }
         .form-admin { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
         .form-admin input, .form-admin button {
-            padding: 12px; border-radius: 8px; border: 1px solid rgba(0,255,255,0.3);
+            padding: 12px; border-radius: 8px; border: 1px solid rgba(0,255,136,0.3);
             background: rgba(0,0,0,0.3); color: white; outline: none;
         }
-        .form-admin input:focus { border-color: #00ffff; }
+        .form-admin input:focus { border-color: #00ff88; }
         .form-admin button {
-            background: #00ffff; color: #000;
+            background: #00ff88; color: #000;
             border: none; font-weight: bold; cursor: pointer; font-size: 1rem;
         }
         .upload-foto {
@@ -68,7 +68,7 @@
             flex-wrap: wrap;
         }
         .btn-escolher-foto {
-            padding: 10px 15px; background: #a855f7; color: white;
+            padding: 10px 15px; background: #22c55e; color: white;
             border: none; border-radius: 8px; cursor: pointer; font-weight: bold;
         }
         .nome-arquivo { color: #ccc; font-size: 0.9rem; }
@@ -82,6 +82,7 @@
         .aviso-senha { color: #888; font-size: 0.85rem; margin-top: 10px; }
         .admin-secreto { position: fixed; top: 0; right: 0; width: 50px; height: 50px; cursor: pointer; opacity: 0; z-index: 999; }
         .preview-editar { max-width: 100px; border-radius: 6px; margin-left: 10px; }
+        .d-none { display: none; }
     </style>
 </head>
 <body>
@@ -95,7 +96,7 @@
         <div class="painel-admin">
             <h2>⚙️ Painel de Administração</h2>
             <div class="form-admin">
-                <input type="text" id="input-nome" placeholder="Nome do prato">
+                <input type="text" id="input-nome" placeholder="Nome do prato / item">
                 
                 <div class="upload-foto">
                     <input type="file" id="input-arquivo-imagem" accept="image/*" class="d-none" onchange="arquivoSelecionado(this)">
@@ -106,9 +107,9 @@
                 </div>
                 
                 <input type="text" id="input-imagem" placeholder="Ou cole o link da imagem aqui">
-                <input type="text" id="input-musica" placeholder="Link MP3 da música (opcional)">
+                <input type="url" id="input-site" placeholder="🔗 URL do site (obrigatório)">
                 
-                <button id="btn-adicionar">➕ Adicionar Novo Prato</button>
+                <button id="btn-adicionar">➕ Adicionar Novo Item</button>
             </div>
             
             <h3 style="color:#ccc; margin:15px 0 10px;">Editar / Remover:</h3>
@@ -117,14 +118,12 @@
             <p class="aviso-senha">Para sair do modo admin, recarregue a página</p>
         </div>
     </div>
-
-    <audio id="player-musica" preload="auto">
-
+    
     <script>
         const SENHA = "admin123";
         let modoAdmin = false;
         let cardapio = [];
-        let imagemBase64 = ""; // Armazena a imagem selecionada do computador
+        let imagemBase64 = "";
 
         function arquivoSelecionado(input) {
             if (!input.files || !input.files[0]) {
@@ -152,7 +151,7 @@
                         id: 1,
                         nome: "Prato de Exemplo",
                         imagem: "https://picsum.photos/id/292/400/250",
-                        musica: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+                        site: "https://www.exemplo.com.br"
                     }
                 ];
                 salvarCardapio();
@@ -169,27 +168,29 @@
             const listaAdmin = document.getElementById('lista-admin');
             grade.innerHTML = '';
             listaAdmin.innerHTML = '';
-
+            
             cardapio.forEach(item => {
                 const cartao = document.createElement('div');
                 cartao.className = 'cartao';
-                cartao.setAttribute('data-musica', item.musica || '');
                 cartao.innerHTML = `
                     <div class="container-imagem" onclick="this.querySelector('.imagem-prato').classList.toggle('zoom')">
                         <img src="${item.imagem}" alt="${item.nome}" class="imagem-prato" loading="lazy" onerror="this.src='https://picsum.photos/id/292/400/250'">
                     </div>
                     <h3 class="nome-prato">${item.nome}</h3>
-                    <button class="botao-acao">Ver Detalhes</button>
+                    <button class="botao-acao" data-site="${item.site || ''}">Ver Detalhes</button>
                 `;
                 grade.appendChild(cartao);
-
+                
                 if (modoAdmin) {
                     const adminItem = document.createElement('div');
                     adminItem.className = 'item-admin';
                     adminItem.innerHTML = `
                         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
                             <img src="${item.imagem}" alt="${item.nome}" class="preview-editar" onerror="this.style.display='none'">
-                            <strong>${item.nome}</strong>
+                            <div>
+                                <strong>${item.nome}</strong>
+                                <div style="font-size:0.8rem; color:#999; margin-top:2px;">${item.site || 'Sem site'}</div>
+                            </div>
                         </div>
                         <div>
                             <button class="btn-editar" onclick="editarItem(${item.id})">✏️ Editar</button>
@@ -199,20 +200,18 @@
                     listaAdmin.appendChild(adminItem);
                 }
             });
-
-            ativarMusicaBotao();
+            
+            ativarBotoesSite();
         }
 
-        function ativarMusicaBotao() {
-            const player = document.getElementById('player-musica');
-            document.querySelectorAll('.botao-acao').forEach((botao, indice) => {
-                const musicaUrl = cardapio[indice]?.musica;
+        function ativarBotoesSite() {
+            document.querySelectorAll('.botao-acao').forEach(botao => {
+                const siteUrl = botao.getAttribute('data-site');
                 botao.onclick = () => {
-                    if (musicaUrl) {
-                        player.src = musicaUrl;
-                        player.currentTime = 0;
-                        player.volume = 0.5;
-                        player.play().catch(e => console.log('Reprodução bloqueada:', e));
+                    if (siteUrl && siteUrl.trim()) {
+                        window.open(siteUrl.trim(), '_blank'); // Abre em nova aba
+                    } else {
+                        alert('🔗 Nenhum site cadastrado para este item!');
                     }
                 };
             });
@@ -236,21 +235,20 @@
             
             const nome = document.getElementById('input-nome').value.trim();
             const linkImagem = document.getElementById('input-imagem').value.trim();
-            const musica = document.getElementById('input-musica').value.trim();
+            const site = document.getElementById('input-site').value.trim();
             
-            // Usa a imagem do arquivo se escolhida, senão usa o link
             const imagemFinal = imagemBase64 || linkImagem;
             
-            if (!nome || !imagemFinal) {
-                return alert('Preencha o Nome e escolha uma foto ou cole um link!');
+            if (!nome || !imagemFinal || !site) {
+                return alert('Preencha: Nome + Foto/Link da imagem + URL do Site!');
             }
-
+            
             const novoId = cardapio.length ? Math.max(...cardapio.map(i => i.id)) + 1 : 1;
             cardapio.push({ 
                 id: novoId, 
                 nome, 
                 imagem: imagemFinal, 
-                musica 
+                site 
             });
             
             salvarCardapio();
@@ -259,7 +257,7 @@
             // Limpa os campos
             document.getElementById('input-nome').value = '';
             document.getElementById('input-imagem').value = '';
-            document.getElementById('input-musica').value = '';
+            document.getElementById('input-site').value = '';
             document.getElementById('nome-arquivo-texto').textContent = 'Nenhum arquivo escolhido';
             imagemBase64 = "";
             
@@ -273,17 +271,17 @@
             const novoNome = prompt('Novo nome:', item.nome);
             if (!novoNome) return;
             
-            const novaImagem = prompt('Nova imagem (deixe em branco para manter a atual):', '');
+            const novaImagem = prompt('Nova imagem (deixe em branco para manter):', '');
             if (novaImagem === null) return;
             
-            const novaMusica = prompt('Nova música:', item.musica || '');
-            if (novaMusica === null) return;
+            const novoSite = prompt('Novo URL do site:', item.site || '');
+            if (novoSite === null) return;
             
             item.nome = novoNome;
             if (novaImagem.trim()) {
                 item.imagem = novaImagem.trim();
             }
-            item.musica = novaMusica;
+            item.site = novoSite.trim();
             
             salvarCardapio();
             renderizarCardapio();
@@ -291,7 +289,7 @@
         };
 
         window.excluirItem = function(id) {
-            if (!confirm('Tem certeza que deseja remover este prato?')) return;
+            if (!confirm('Tem certeza que deseja remover este item?')) return;
             cardapio = cardapio.filter(i => i.id !== id);
             salvarCardapio();
             renderizarCardapio();
